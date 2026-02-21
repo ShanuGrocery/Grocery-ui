@@ -1,58 +1,104 @@
-import React from 'react';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
-import { MdEdit, MdKey, MdOutlineLogout } from 'react-icons/md';
-import { useAuth } from '../../../context/AuthContext.jsx'; // Make sure path is correct
+import React, { useState } from "react";
+import { Menu, MenuItem, Box, Divider, Typography, Avatar } from "@mui/material";
+import { MdEdit, MdKey, MdOutlineLogout } from "react-icons/md";
+import { AiOutlineEdit } from "react-icons/ai"; // Edit icon
+import { Link } from "react-router-dom";
 
-function Profile() {
-  const { user } = useAuth();
+// ProfileMenu Component
+const ProfileMenu = ({ user, logout }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openMenu = Boolean(anchorEl);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    logout(); // Call logout method from AuthContext
+    handleMenuClose();
+  };
 
   return (
-    <div className="profile-container absolute top-[10vh] right-[-50px] border shadow-md rounded-b-2xl bg-white p-8 z-50">
-      <div className="upper flex items-center flex-col justify-center px-3 py-2">
-        <div>
-          <div className="relative border-2 border-red-500 rounded-full border-dashed">
-            <img
-              src="https://demo.foodscan.xyz/images/default/profile.png"
-              className="p-1 w-24 h-24 rounded-full"
-              alt="Profile"
-            />
-            <AiOutlineEdit
-              size={38}
-              className="absolute bottom-[-10px] left-[32%] border-2 p-1 rounded-full bg-black text-white"
-            />
-          </div>
-        </div>
-        <div className="text-center p-3">
-          <h2 className="font-bold">
-            {user?.userName || 'User'}
-          </h2>
-          <p className="text-sm font-semibold text-gray-500">
-            {user?.email || 'Email not available'}
-          </p>
-          <p className="text-sm font-semibold text-gray-500">
-            +91 9876543210 {/* Replace with actual phone if available */}
-          </p>
-        </div>
-      </div>
-      <div className="lower-links px-3 py-3 flex flex-col gap-2">
-        <Link className="flex items-center gap-3 text-gray-600 hover:text-orange-500">
-          <MdEdit /> Edit Profile
-        </Link>
-        <hr />
-        <Link className="flex items-center gap-3 text-gray-600 hover:text-orange-500">
-          <MdKey /> Change Password
-        </Link>
-        <hr />
-        <Link
-          to="/login"
-          className="flex items-center gap-3 text-gray-600 hover:text-orange-500"
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      {/* Profile Avatar and Menu Trigger */}
+      <Box sx={{ position: "relative" }}>
+        <Avatar
+          sx={{
+            width: 64,
+            height: 64,
+            bgcolor: "#1D4ED8",
+            cursor: "pointer",
+            fontSize: 32, // Adjust size of the text inside Avatar
+          }}
+          onClick={handleMenuOpen}
         >
-          <MdOutlineLogout className="rotate-180" /> Logout
-        </Link>
-      </div>
-    </div>
-  );
-}
+          {user?.userName?.charAt(0)?.toUpperCase() || "G"}
+        </Avatar>
 
-export default Profile;
+        {/* Edit Icon positioned at the bottom right of Avatar */}
+        <AiOutlineEdit
+          size={32}
+          className="absolute bottom-[-8px] right-[-8px] border-2 p-1 rounded-full bg-black text-white cursor-pointer"
+          onClick={handleMenuOpen}
+        />
+      </Box>
+
+      {/* Profile Information and Dropdown Menu */}
+      <Menu
+        anchorEl={anchorEl}
+        open={openMenu}
+        onClose={handleMenuClose}
+        MenuListProps={{
+          "aria-labelledby": "profile-menu-button",
+        }}
+        PaperProps={{
+          sx: {
+            borderRadius: 2,
+            minWidth: 220,
+            background: "#f9fafb", // Light background
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+          },
+        }}
+      >
+        <Box sx={{ textAlign: "center", padding: 2 }}>
+          {/* Profile Name, Email, and Phone Number */}
+          <Typography variant="h6" sx={{ fontWeight: "bold", color: "#1D4ED8" }}>
+            {user?.userName || "User"}
+          </Typography>
+          <Typography variant="body2" sx={{ color: "gray" }}>
+            {user?.email || "Email not available"}
+          </Typography>
+          <Typography variant="body2" sx={{ color: "gray" }}>
+            +91 9876543210 {/* Placeholder phone */}
+          </Typography>
+        </Box>
+
+        <Divider sx={{ margin: "8px 0" }} />
+
+        {/* Menu Links */}
+        <MenuItem onClick={handleMenuClose}>
+          <Link to="/profile" style={{ textDecoration: "none", color: "black" }}>
+            <MdEdit size={20} style={{ marginRight: 10 }} />
+            Edit Profile
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleMenuClose}>
+          <Link to="/change-password" style={{ textDecoration: "none", color: "black" }}>
+            <MdKey size={20} style={{ marginRight: 10 }} />
+            Change Password
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleLogout}>
+          <MdOutlineLogout size={20} style={{ marginRight: 10 }} />
+          Logout
+        </MenuItem>
+      </Menu>
+    </Box>
+  );
+};
+
+export default ProfileMenu;

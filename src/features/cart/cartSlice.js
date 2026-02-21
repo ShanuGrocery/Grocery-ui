@@ -36,7 +36,7 @@ const cartSlice = createSlice({
     addItem(state, action) {
       const item = normalizeItem(action.payload);
       const variantId = item.selectedVariant.id || item.selectedVariant.unit;
-
+     
       const existingItem = state.items.find(
         (i) =>
           i.id === item.id &&
