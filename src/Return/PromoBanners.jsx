@@ -1,12 +1,12 @@
 import React from "react";
 import { Slide, Zoom } from "react-awesome-reveal";
-import { Link, useNavigate } from "react-router-dom";
-import { FaSprayCan, FaLeaf, FaMugHot } from "react-icons/fa"; // Icons
+import { useNavigate } from "react-router-dom";
+import { FaSprayCan, FaLeaf, FaMugHot } from "react-icons/fa";
+
 import adbanner from "../assets/dio1.png";
 import adbanner1 from "../assets/skin4.png";
-import adbanner2 from "../assets/tea1.png";
+import adbanner2 from "../assets/lal1.png";
 
-// Banners with icons
 const banners = [
   {
     id: 1,
@@ -15,7 +15,7 @@ const banners = [
     cashback: "Max cashback: 2%",
     code: "CARE02",
     img: adbanner,
-    link: "/category/684dc29ff21525212b194314", // Example link to detergent category
+    link: "/category/696232d098494c2decd6fa0e",
     icon: <FaSprayCan className="text-3xl text-orange-600 mb-2" />,
     hoverShadow: "hover:shadow-[0_10px_15px_-3px_rgba(255,115,0,0.6)]",
   },
@@ -24,17 +24,17 @@ const banners = [
     bgColor: "bg-yellow-200",
     title: "Glow Naturally Shop Skincare at Shanumart!",
     img: adbanner1,
-    link:"/category/68474771cace49c52299e5d2",
+    link: "/category/68474771cace49c52299e5d2",
     icon: <FaLeaf className="text-3xl text-yellow-700 mb-2" />,
     hoverShadow: "hover:shadow-[0_10px_15px_-3px_rgba(234,179,8,0.6)]",
   },
   {
     id: 3,
     bgColor: "bg-green-200",
-    title: "Have Great Day with Shanumart Tea 🐄!",
+    title: "Protect Your Baby With ShanuMart👶!",
     code: "CARE12",
     img: adbanner2,
-    link:"/category/684580bb5b1b7564a62a37ce",
+    link: "/category/684dc41ff21525212b194334",
     icon: <FaMugHot className="text-3xl text-green-700 mb-2" />,
     hoverShadow: "hover:shadow-[0_10px_15px_-3px_rgba(34,197,94,0.6)]",
   },
@@ -42,6 +42,13 @@ const banners = [
 
 const PromoBanners = () => {
   const navigate = useNavigate();
+
+  const handleClick = (link) => {
+    // scroll position save
+    sessionStorage.setItem("scrollPosition", window.scrollY);
+
+    navigate(link);
+  };
 
   return (
     <section className="px-4 max-w-7xl mx-auto pt-2 pb-8 mt-[-24px]">
@@ -55,22 +62,22 @@ const PromoBanners = () => {
               <div
                 className={`relative ${banner.bgColor} rounded-xl shadow-lg overflow-hidden w-full flex flex-row items-stretch transition-all duration-500 ${banner.hoverShadow} hover:scale-[1.02]`}
               >
-                {/* Text Content */}
+                {/* Text */}
                 <div className="w-1/2 p-5 flex flex-col justify-center items-start text-left">
                   {banner.icon}
                   <h3 className="text-xl sm:text-2xl font-bold mb-2 leading-snug">
                     {banner.title}
                   </h3>
-                  <Link
-                    to="#"
-                    onClick={() => navigate(banner.link)}
-                    className="bg-green-700 text-white px-4 py-2 rounded-full hover:bg-white hover:text-orange-300 transition-all duration-700"
+
+                  <button
+                    onClick={() => handleClick(banner.link)}
+                    className="bg-gray-600 text-white px-4 py-2 rounded-full hover:bg-white hover:text-orange-300 transition-all duration-700"
                   >
                     Shop Now
-                  </Link>
+                  </button>
                 </div>
 
-                {/* Image Section */}
+                {/* Image */}
                 <div className="w-1/2 h-48 sm:h-60 lg:h-auto">
                   <img
                     src={banner.img}

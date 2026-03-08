@@ -40,8 +40,8 @@ const HeroBanner = () => {
             className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-semibold rounded-full shadow-md transition-all duration-300 hover:shadow-[0_10px_25px_rgba(34,197,94,0.5)] group"
           >
             {heroData.buttonText}
-            <span className="ml-3 inline-block transition-transform duration-300 transform group-hover:translate-x-1 animate-bounce">
-              →
+            <span className="ml-3 inline-block transition-transform duration-300 transform group-hover:translate-x-1 ">
+              
             </span>
           </button>
         </Link>

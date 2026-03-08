@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import ProductGrid from "../Product/ProductGrid.jsx";
 import CategoriesSection from "../category/CategoriesSection.jsx";
 import { Slide, Zoom } from "react-awesome-reveal";
 // import abouticon from "../assets/about.svg";
-import aboutImage from "../../assets/about.svg";
+// import aboutImage from "../../assets/about.svg";
 
 import ChatWidget from "./ChatWidget"; // adjust path if needed
 
@@ -32,6 +32,7 @@ import HeroBanner from "../../Return/HeroBanner.jsx";
 import FeatureStrip from "../../Return/FeatureStrip.jsx";
 import StayUpdated from "../../Return/StayUpdated.jsx";
 import PromoBanners from "../../Return/PromoBanners.jsx";
+import WelcomeSection from "../../Return/WelcomeSection.jsx";
 
 // import logo from '..\assets\logo2.png'
 
@@ -43,6 +44,32 @@ const Home = () => {
     setTimeout(() => navigate("/arrivals"), 500);
   };
    
+   useEffect(() => {
+    const savedPosition = sessionStorage.getItem("scrollPosition");
+
+    if (savedPosition) {
+      window.scrollTo({
+        top: parseInt(savedPosition),
+        behavior: "smooth",
+      });
+
+      sessionStorage.removeItem("scrollPosition");
+    }
+  }, []);
+
+   useEffect(() => {
+    const savedPosition = sessionStorage.getItem("scrollPosition");
+
+    if (savedPosition) {
+      window.scrollTo({
+        top: parseInt(savedPosition),
+        behavior: "smooth",
+      });
+
+      sessionStorage.removeItem("scrollPosition");
+    }
+  }, []);
+
 
   return (
     <div className="bg-gray-50">
@@ -56,45 +83,7 @@ const Home = () => {
 
       {/* grab first offer*/}
       {/* relative bg-green-100 text-center py-16 px-4 rounded-b-3xl */}
-      <section className="relative text-center -mt-8 py-12 px-4 rounded-b-3xl">
-  <div className="max-w-8xl mx-auto">
-    <Slide direction="down">
-      <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col lg:flex-row items-center text-center lg:text-left space-y-6 lg:space-y-0 lg:space-x-10 w-full max-w-6xl mx-auto">
-        {/* Image */}
-        <div className="flex-shrink-0 animate-bounce">
-          <img
-            src={aboutImage}
-            alt="about-icon"
-            className="w-32 h-32 object-contain mx-auto lg:mx-0"
-          />
-        </div>
-
-        {/* Text + Button */}
-        <div className="flex flex-col justify-center items-center lg:items-start space-y-4">
-          <div>
-            <h1 className="text-4xl font-bold text-green-800 mb-2 animate-fade-in-up">
-              Welcome to <span className="text-yellow-500">Shanu-</span>Mart
-            </h1>
-            <p className="text-lg text-green-700 max-w-xl animate-fade-in-up delay-100">
-              Grab Your First Order From Shanu Mart &{" "}
-              <span className="text-green-600 font-semibold">₹</span> And Get{" "}
-              <strong>₹50</strong> Maff.
-            </p>
-          </div>
-
-          <Link to="#">
-            <button
-              className="bg-green-600 hover:bg-green-700 text-white text-lg font-semibold px-6 py-3 rounded-full transition-all duration-300 shadow-md animate-fade-in-up delay-200"
-              onClick={() => navigate("/category/684dc612f21525212b194366")}
-            >
-              Grab Your First Order Here
-            </button>
-          </Link>
-        </div>
-      </div>
-    </Slide>
-  </div>
-</section>
+    <WelcomeSection/>
 
 
       {/* cashback and offer section */}
