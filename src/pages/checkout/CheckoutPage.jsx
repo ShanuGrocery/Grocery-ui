@@ -26,8 +26,8 @@ const RazorpayBadge = () => (
 
 // ─── Helper: payment status badge ─────────────────────────────────────────────
 const paymentMethodInfo = {
-  cod: { label: "Cash on Delivery 💵", desc: "Pay when your order arrives" },
-  online: { label: "Pay Online", desc: "Secure payment via Razorpay – UPI, Cards, NetBanking & more" },
+  COD: { label: "Cash on Delivery 💵", desc: "Pay when your order arrives" },
+  ONLINE: { label: "Pay Online", desc: "Secure payment via Razorpay – UPI, Cards, NetBanking & more" },
 };
 
 const CheckoutPage = () => {
@@ -45,7 +45,7 @@ const CheckoutPage = () => {
   const [addresses, setAddresses] = useState([]);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [addingNewAddress, setAddingNewAddress] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState("cod");
+  const [paymentMethod, setPaymentMethod] = useState("COD");
   const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
@@ -200,6 +200,7 @@ const CheckoutPage = () => {
         discount,
         offerApplied: null,
         shipping: buildShipping(),
+        paymentMethod: "ONLINE",
       };
 
       // ── Step 2: Open Razorpay modal ────────────────────────────────────────
@@ -307,7 +308,7 @@ const CheckoutPage = () => {
     }
   };
 
-  const handlePlaceOrder = paymentMethod === "online" ? handleOnlinePayment : handleCODOrder;
+  const handlePlaceOrder = paymentMethod === "ONLINE" ? handleOnlinePayment : handleCODOrder;
 
   // ══════════════════════════════════════════════════════════════════════════════
   // RENDER
@@ -398,40 +399,39 @@ const CheckoutPage = () => {
           )}
 
           {/* ── Payment Method ───────────────────────────────────────────── */}
-          {!addingNewAddress && (
-            <div>
+          <div>
               <label className="block mb-3 font-semibold text-gray-800">Payment Method</label>
               <div className="space-y-3">
                 {/* COD option */}
-                <label className={`flex items-start gap-3 border rounded-lg p-4 cursor-pointer transition ${paymentMethod === "cod" ? "border-green-600 bg-green-50" : "border-gray-200 hover:border-green-300"
+                <label className={`flex items-start gap-3 border rounded-lg p-4 cursor-pointer transition ${paymentMethod === "COD" ? "border-green-600 bg-green-50" : "border-gray-200 hover:border-green-300"
                   }`}>
                   <input
-                    type="radio" name="paymentMethod" value="cod"
-                    checked={paymentMethod === "cod"}
-                    onChange={() => setPaymentMethod("cod")}
+                    type="radio" name="paymentMethod" value="COD"
+                    checked={paymentMethod === "COD"}
+                    onChange={() => setPaymentMethod("COD")}
                     className="mt-1"
                   />
                   <div>
-                    <p className="font-semibold text-gray-800">{paymentMethodInfo.cod.label}</p>
-                    <p className="text-xs text-gray-500 mt-0.5">{paymentMethodInfo.cod.desc}</p>
+                    <p className="font-semibold text-gray-800">{paymentMethodInfo.COD.label}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">{paymentMethodInfo.COD.desc}</p>
                   </div>
                 </label>
 
                 {/* Online option */}
-                <label className={`flex items-start gap-3 border rounded-lg p-4 cursor-pointer transition ${paymentMethod === "online" ? "border-blue-600 bg-blue-50" : "border-gray-200 hover:border-blue-300"
+                <label className={`flex items-start gap-3 border rounded-lg p-4 cursor-pointer transition ${paymentMethod === "ONLINE" ? "border-blue-600 bg-blue-50" : "border-gray-200 hover:border-blue-300"
                   }`}>
                   <input
-                    type="radio" name="paymentMethod" value="online"
-                    checked={paymentMethod === "online"}
-                    onChange={() => setPaymentMethod("online")}
+                    type="radio" name="paymentMethod" value="ONLINE"
+                    checked={paymentMethod === "ONLINE"}
+                    onChange={() => setPaymentMethod("ONLINE")}
                     className="mt-1"
                   />
                   <div className="flex-1">
                     <p className="font-semibold text-gray-800 flex items-center gap-1">
-                      {paymentMethodInfo.online.label}
+                      {paymentMethodInfo.ONLINE.label}
                       <RazorpayBadge />
                     </p>
-                    <p className="text-xs text-gray-500 mt-0.5">{paymentMethodInfo.online.desc}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">{paymentMethodInfo.ONLINE.desc}</p>
                     {/* Accepted methods */}
                     <div className="flex items-center gap-2 mt-2 flex-wrap">
                       {["UPI", "Cards", "NetBanking", "Wallets"].map((m) => (
@@ -445,13 +445,12 @@ const CheckoutPage = () => {
               </div>
 
               {/* Razorpay SDK not loaded warning */}
-              {paymentMethod === "online" && !rzpLoaded && (
+              {paymentMethod === "ONLINE" && !rzpLoaded && (
                 <p className="text-xs text-orange-500 mt-2 flex items-center gap-1">
                   <span>⏳</span> Loading payment gateway…
                 </p>
               )}
             </div>
-          )}
 
           {/* ── Submit button ────────────────────────────────────────────── */}
           <button
@@ -460,9 +459,9 @@ const CheckoutPage = () => {
               isProcessing ||
               items.length === 0 ||
               (!addingNewAddress && !selectedAddressId) ||
-              (paymentMethod === "online" && !rzpLoaded)
+              (paymentMethod === "ONLINE" && !rzpLoaded)
             }
-            className={`w-full py-3 rounded-lg font-semibold text-white transition disabled:opacity-60 disabled:cursor-not-allowed ${paymentMethod === "online"
+            className={`w-full py-3 rounded-lg font-semibold text-white transition disabled:opacity-60 disabled:cursor-not-allowed ${paymentMethod === "ONLINE"
                 ? "bg-blue-600 hover:bg-blue-700"
                 : "bg-green-600 hover:bg-green-700"
               }`}
@@ -473,11 +472,11 @@ const CheckoutPage = () => {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="white" strokeWidth="4" />
                   <path className="opacity-75" fill="white" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z" />
                 </svg>
-                {paymentMethod === "online" ? "Opening Payment..." : "Placing Order..."}
+                {paymentMethod === "ONLINE" ? "Opening Payment..." : "Placing Order..."}
               </span>
             ) : addingNewAddress ? (
               "Save & Place Order"
-            ) : paymentMethod === "online" ? (
+            ) : paymentMethod === "ONLINE" ? (
               `Pay ₹${Number(finalAmount).toFixed(2)} Online`
             ) : (
               "Place Order (COD)"
@@ -485,7 +484,7 @@ const CheckoutPage = () => {
           </button>
 
           {/* Security note for online */}
-          {paymentMethod === "online" && (
+          {paymentMethod === "ONLINE" && (
             <p className="text-xs text-center text-gray-400 mt-1 flex items-center justify-center gap-1">
               <span>🔒</span> 100% Secure. Powered by Razorpay.
             </p>
