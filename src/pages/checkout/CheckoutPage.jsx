@@ -125,6 +125,16 @@ const CheckoutPage = () => {
 
   // ── Validation ─────────────────────────────────────────────────────────────
   const validateForm = () => {
+    // If user is using a saved address, we rely on the stored address being valid.
+    // Still guard against the case where no address is selected.
+    if (!addingNewAddress) {
+      if (!selectedAddressId) {
+        toast.error("Please select a shipping address before placing your order.");
+        return false;
+      }
+      return true;
+    }
+
     const newErrors = {};
     ["fullName", "email", "phoneNumber", "street", "city", "state", "postalCode", "country"].forEach(
       (f) => { if (!formData[f]) newErrors[f] = "This field is required"; }
