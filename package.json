@@ -19,6 +19,7 @@
     "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "boxicons": "^2.1.4",
+    "canvas-confetti": "^1.9.4",
     "dayjs": "^1.11.13",
     "formik": "^2.4.6",
     "framer-motion": "^12.12.1",
