@@ -87,7 +87,7 @@ const Home = () => {
 
 
       {/* cashback and offer section */}
-     <PromoBanners/>
+    
       {/* Categories Preview */}
 
       {/* <CategoriesSection /> */}
@@ -101,6 +101,7 @@ const Home = () => {
         <ProductGrid />
       </section>
 
+ <PromoBanners/>
       {/* shop now */}
 
       <BannerSection />

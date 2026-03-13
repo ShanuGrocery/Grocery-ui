@@ -8,7 +8,7 @@ const heroData = {
   subtitle:
     " Grand Opening Today! Discover fresh groceries, daily deals, and quick delivery — all at your doorstep!",
   buttonText: "Start Shopping",
-  buttonLink: "/category/68642b881f4f1ee21d3fd511",
+  buttonLink: "",
 };
 
 const HeroBanner = () => {
@@ -38,17 +38,17 @@ const HeroBanner = () => {
     <section className="relative text-center py-24 px-6 bg-gradient-to-br from-green-100 via-green-200 to-green-100 overflow-hidden rounded-b-3xl">
 
       {/* Grand Opening Badge */}
-      <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-green-900 font-bold px-6 py-2 rounded-full shadow-lg animate-bounce z-20">
+      {/* <div className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-green-900 font-bold px-6 py-2 rounded-full shadow-lg animate-bounce z-20">
         Grand Opening – 11 March 
-      </div>
+      </div> */}
 
       {/* Flower Rain */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {/* <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="flower flower1">🌸</div>
         <div className="flower flower2">🌼</div>
         <div className="flower flower3">🌺</div>
         <div className="flower flower4">🌹</div>
-      </div>
+      </div> */}
 
       <div className="relative max-w-4xl mx-auto z-10">
 
