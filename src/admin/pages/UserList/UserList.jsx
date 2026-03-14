@@ -45,6 +45,10 @@ const UserList = ({ role = 'customer' }) => {
     (currentPage - 1) * USERS_PER_PAGE,
     currentPage * USERS_PER_PAGE
   );
+ 
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) setCurrentPage(page);
+  };
 
   const handleDeleteUser = async (userId) => {
     if (window.confirm("Are you sure you want to delete this user? This action cannot be undone.")) {
