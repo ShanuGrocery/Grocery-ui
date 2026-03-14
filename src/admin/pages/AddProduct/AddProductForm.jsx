@@ -124,18 +124,18 @@ const AddProduct = () => {
   };
 
   // Handle file selection for image upload.
-const handleFileChange = (e) => {
-  const files = Array.from(e.target.files);
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
 
-  if (files.length + selectedFiles.length > 3) {
-    toast.error("You can upload a maximum of 3 images.");
-    return;
-  }
+    if (files.length + selectedFiles.length > 3) {
+      toast.error("You can upload a maximum of 3 images.");
+      return;
+    }
 
-  const newPreviews = files.map(file => URL.createObjectURL(file));
-  setSelectedFiles(prev => [...prev, ...files]);
-  setPreviews(prev => [...prev, ...newPreviews]);
-};
+    const newPreviews = files.map(file => URL.createObjectURL(file));
+    setSelectedFiles(prev => [...prev, ...files]);
+    setPreviews(prev => [...prev, ...newPreviews]);
+  };
 
 
   // Remove selected images.
@@ -209,49 +209,49 @@ const handleFileChange = (e) => {
 
       {/* Image Upload Section */}
       <Box className="flex justify-center mb-6">
-  <Box className="relative w-full max-w-md bg-yellow-50 border-2 border-orange-400 border-dashed rounded-lg p-4 flex flex-col items-center">
-    {previews.length > 0 && (
-      <>
-        {previews.map((src, index) => (
-          <img
-            key={index}
-            src={src}
-            alt={`Preview ${index + 1}`}
-            className="max-w-full max-h-48 rounded-lg mb-2"
-          />
-        ))}
-        <Button
-          type="button"
-          onClick={removeImages}
-          variant="contained"
-          color="error"
-          className="mt-2"
-        >
-          Remove All
-        </Button>
-      </>
-    )}
+        <Box className="relative w-full max-w-md bg-yellow-50 border-2 border-orange-400 border-dashed rounded-lg p-4 flex flex-col items-center">
+          {previews.length > 0 && (
+            <>
+              {previews.map((src, index) => (
+                <img
+                  key={index}
+                  src={src}
+                  alt={`Preview ${index + 1}`}
+                  className="max-w-full max-h-48 rounded-lg mb-2"
+                />
+              ))}
+              <Button
+                type="button"
+                onClick={removeImages}
+                variant="contained"
+                color="error"
+                className="mt-2"
+              >
+                Remove All
+              </Button>
+            </>
+          )}
 
-    {/* Show Add Image icon if less than 3 images uploaded */}
-    {previews.length < 3 && (
-      <>
-        <input
-          type="file"
-          id="image-upload"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="hidden"
-        />
-        <label
-          htmlFor="image-upload"
-          className="mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg cursor-pointer"
-        >
-          Add Image
-        </label>
-      </>
-    )}
-  </Box>
-</Box>
+          {/* Show Add Image icon if less than 3 images uploaded */}
+          {previews.length < 3 && (
+            <>
+              <input
+                type="file"
+                id="image-upload"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+              <label
+                htmlFor="image-upload"
+                className="mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg cursor-pointer"
+              >
+                Add Image
+              </label>
+            </>
+          )}
+        </Box>
+      </Box>
 
 
       {/* Product Details Form */}
@@ -317,16 +317,29 @@ const handleFileChange = (e) => {
           </div>
         </Box>
 
-        <div>
-          <label className="block font-semibold mb-2">Brand</label>
-          <input
-            type="text"
-            name="brand"
-            value={product.brand}
-            onChange={handleInputChange}
-            className="w-full border p-3 rounded"
-          />
-        </div>
+        <Box className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block font-semibold mb-2">Brand</label>
+            <input
+              type="text"
+              name="brand"
+              value={product.brand}
+              onChange={handleInputChange}
+              className="w-full border p-3 rounded"
+            />
+          </div>
+          <div>
+            <label className="block font-semibold mb-2">Discount (%)</label>
+            <input
+              type="number"
+              name="discount"
+              value={product.discount}
+              onChange={handleInputChange}
+              className="w-full border p-3 rounded"
+              placeholder="0"
+            />
+          </div>
+        </Box>
 
         <div>
           <label className="block font-semibold mb-2">Description</label>
